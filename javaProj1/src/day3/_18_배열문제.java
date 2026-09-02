@@ -54,6 +54,13 @@ public class _18_배열문제 {
 
 		System.out.println("가장 작은 수:(" + minVal + ") (" + minIdx + ")번 째 인덱스");
 		System.out.println("가장 큰 수 :(" + maxVal + ") (" + maxIdx + ")번째 인덱스");
+		
+		System.out.println("위치 바꾸기..");
+		int tmpVal = arr[minIdx];
+		arr[minIdx] = arr[maxIdx];
+		arr[maxIdx] = tmpVal;
+		
+		System.out.println(Arrays.toString(arr));
 
 	}
 }
