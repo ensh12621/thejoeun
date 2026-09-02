@@ -22,5 +22,6 @@ public class _21_중첩반복연습문제 {
 			}
 			System.out.println();
 		}
+		
 	}
 }
