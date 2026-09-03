@@ -38,14 +38,14 @@ public class _18_배열문제 {
 		int maxVal = arr[0];
 		int maxIdx = 0;
 
-		for (int i = 0; i < arr.length; i++) {
+		for (int i = 1; i < arr.length; i++) {
 			if (minVal > arr[i]) {
 				minVal = arr[i];
 				minIdx = i;
 			}
 		}
 
-		for (int i = 0; i < arr.length; i++) {
+		for (int i = 1; i < arr.length; i++) {
 			if (maxVal < arr[i]) {
 				maxVal = arr[i];
 				maxIdx = i;
