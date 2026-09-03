@@ -7,13 +7,20 @@ public class _12_선택정렬 {
 	public static void main(String[] args) {
 		int[] arr = { 9, 6, 7, 3, 5 };
 
-		int minVal = arr[0];
-
+		System.out.println("original -> " + Arrays.toString(arr));
+		
 		for (int i = 0; i < arr.length; i++) {
 			for (int j = i; j < arr.length; j++) {
-				System.out.println("i,j => " + i + ", " + j);
-				// TODO 내일 허자..
+				// System.out.println("arr["+i+"]=" + arr[i]+", arr["+j+"]="+ arr[j]);
+				if(arr[i] > arr[j]){
+					// System.out.println("changing between " + arr[i] +  " and " + arr[j]);
+					int tmp = arr[i];
+					arr[i] = arr[j];
+					arr[j] = tmp;
+
+				}
 			}
+			//System.out.println();
 		}
 
 //		
@@ -30,5 +37,7 @@ public class _12_선택정렬 {
 //		arr[minIndex] = temp;
 //		System.out.println(Arrays.toString(arr));
 //		
+
+		System.out.println("Sorted -> " + Arrays.toString(arr));
 	}
 }
