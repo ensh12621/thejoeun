@@ -2,9 +2,9 @@ package day5;
 
 public class Animal {
 
-	private String kind;
-	private String name;
-	private int age;
+	String kind;
+	String name;
+	int age;
 	
 	public Animal() {
 		
