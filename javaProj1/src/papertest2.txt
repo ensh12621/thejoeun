@@ -1,0 +1,121 @@
+1. 1
+2. 
+
+class SharpPencil{
+	private int width;
+	private int amount;
+
+	public int getAmount(){
+		return amount;
+	}
+
+	public void setAmount( int amount){
+		this.amount = amount;
+	}
+	
+}
+
+class Ballpen extends SharpPencil{
+	private String color;
+
+	public void setColor(Stirng color){
+		this.color = color;
+	}
+
+	public String getColor(){
+		return color;
+	}
+}
+
+class FountainPen extends Ballpen{
+	public void setColor(String color) { 
+		this.color = color; 
+	}
+    public void refill (int n) { 
+    	setAmount(n); 
+	}
+}
+
+
+3-1. 서브클래스
+3-2. extends
+3-3. super
+3-4. instanceof
+3-5. implements - 오답 interface
+
+4. 2
+
+5.
+super(size);
+
+
+6.
+A
+B: 11
+
+7.
+상속하는 class A의 디폴트 생성자가 없다.
+해결 예시
+class A{
+	private int a;
+	protected A(){
+		a = 10;
+	}
+}
+해결 예시2
+class A {
+   private int a;
+   protected A(int i) { a = i; }
+}
+class B extends A {
+   private int b;
+   public B() { super(10); b = 0; }
+}
+
+
+8-1.
+void f(); // f 메서드에 abstract가 빠졌음.
+
+8-2.
+문제 없음
+
+8-3.
+문제 없음
+
+8-4.
+f 메서드를 오버라이딩 해야 함.
+
+8-5.
+오버라이딩 메서드 리턴 타입이 int여야 함.
+
+9.
+public class B extends OddDector{
+	public B(int n){
+		super(n);
+	}
+
+	@Override
+	public boolean isOdd(){
+		return super.n % 2 == 0 ? false : true;
+	}
+
+	public static void main(String[] args){
+		B b = new B(10);
+		System.out.println(b.isOdd());
+	}
+}
+
+
+10-1. 2,3
+
+10-2.
+true
+false
+
+11. 4
+
+
+
+
+
+

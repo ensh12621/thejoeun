@@ -1,4 +1,4 @@
-package middleTest;
+package lastMiddleTest;
 
 import java.util.Scanner;
 

@@ -1,0 +1,80 @@
+1. 4
+2. 4
+3. 1 -오답 3
+4. 3 -오답 2
+5. 1
+6-1.
+public TV(){
+	this(32, "LG");
+}
+
+public TV(String manufacturer){
+	this(32, manufacturer);
+}
+
+6-2.
+new TV(); => 32인치 LG
+new TV("삼성"); => 32인치 삼성
+
+6-3.
+TV tv = TV(65, "삼성");
+
+6-4.
+자신 클래스의 다른 생성자를 호출할 수 있다. -오답 : 간결
+
+7.
+private 접근 제한자가 있는 int형 변수 age가 클래스 외부에서 사용되고 있다. 이를 setter/getter를 통해
+간접적으로 age에 접근하여 수정 및 참조할 수 있다.
+예)
+
+class Person{
+	private int age;
+
+	public void setAge(int age){
+		this.age = age;
+	}
+
+	publci int getAge(){
+		return age;
+	}
+}
+
+
+8.
+class Power{
+	private int kick;
+	private int punch
+
+	public void setKick(int kick){
+		this.kick = kick;
+	}
+
+	public int getKick(){
+		return kick;
+	}
+
+	public void setPunch(int punch){
+		this.punch = punch;
+	}
+
+	public int getPunch(){
+		return punch;
+	}
+}
+
+public class Example{
+	public static void main(String[] args){
+		Power robot = new Power();
+		robot.setKick(10);
+		robot.setPunch(20);
+	}
+}
+
+9-1. 아니오. -오답 
+
+9-2 - 오답 // 레퍼런스가 참조되지 않을 때 가비지 발생!! 포인터가 null인건 상관없음!
+a = null;
+b = null;
+에서 가비지가 발생한다.
+
+10. 4
