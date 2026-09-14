@@ -36,9 +36,9 @@ public class _5_성적관리프로그램 {
 				// 메뉴로 이동
 				// 있는 학번이면 java, db, html 점수를 다시 입력받아서 해당 저무솔 저ㅏㅈㅇ
 				// 자바, db, html의 점수 버무이는 1번 메뉴와 같다.
-				updateGrade(scanner, indexList, list);
+				updateGrade(scanner, list);
 			} else if (menu == 5) {
-				
+				removeGrade(scanner, list, indexList);
 			} else {
 				System.out.println("프로그램을 종료합니다.");
 				break;
@@ -47,7 +47,45 @@ public class _5_성적관리프로그램 {
 
 	}
 
-	private static void updateGrade(Scanner scanner, List<String> indexList, List<Map<String, Object>> list) {
+	private static void removeGrade(Scanner scanner, List<Map<String, Object>> list, List<String> indexList) {
+		// 학번을 입력받음 -> 없으면 확인해주세요
+		// 메뉴로 이동
+		// 학번 있음 -> 정말 삭제?
+		// Yy면, 해당 학번 정보 삭제
+		// 그 외 문자 입력시 "취소되었습니다." 문구
+
+		System.out.println("학번 입력: ");
+		String studNo = scanner.next();
+		Map<String, Object> student = findByStudentNo(list, studNo);
+		if(student == null) {
+			System.out.println("학번을 다시 확인해주세요.");
+			return;
+		}
+		
+		System.out.print("정말 삭제하시겠습니까?(y): ");
+		String continueRemoval = scanner.next();
+		
+		if(continueRemoval.toLowerCase().equals("y")) {
+			//indexList.remove(Integer.parseInt(studNo));
+			
+			System.out.println("before list: " + indexList);
+			
+			for(int i=0; i<indexList.size(); i++) {
+				System.out.println("for -- indexList.get("+i+") : " +  indexList.get(i));
+				if(indexList.get(i).equals(studNo)) {
+					indexList.remove(i);
+					list.remove(i);
+					System.out.println("list: " + indexList);
+				}
+			}
+			
+			list.remove(student);
+			System.out.println("삭제가 완료되었습니다.");
+		}
+		
+	}
+
+	private static void updateGrade(Scanner scanner, List<Map<String, Object>> list) {
 
 		// 학번 입력 받아서 해당 학번이 없으면 학번을 확인해주세요
 		// 메뉴로 이동
@@ -86,9 +124,6 @@ public class _5_성적관리프로그램 {
 		// 5등 : 000
 
 		// 총점 구하기
-
-		// 총점과 이름을 담는 리스트
-		List<Map<String, Object>> totalList = new ArrayList<>();
 
 		// 총점과 이름 값을 구해서 배열에 담기
 		String[] studNameArr = new String[list.size()];
