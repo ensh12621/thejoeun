@@ -15,7 +15,7 @@ public class _5_성적관리프로그램 {
 		System.out.println("========= 성적관리 프로그램 =========");
 
 		while (true) {
-			System.out.print("[ (1)성적등록 (2)성적확인 (3)리스트 (그외)종료 ]: ");
+			System.out.print("[ (1)성적등록 (2)성적확인 (3)리스트 (4)성적수정 (5)삭제 (그외)종료 ]: ");
 			int menu = scanner.nextInt();
 
 			if (menu == 1) {
@@ -31,11 +31,48 @@ public class _5_성적관리프로그램 {
 				// 3등 : 000
 				// 4등 : 000
 				// 5등 : 000
+			} else if (menu == 4) {
+				// 학번 입력 받아서 해당 학번이 없으면 학번을 확인해주세요
+				// 메뉴로 이동
+				// 있는 학번이면 java, db, html 점수를 다시 입력받아서 해당 저무솔 저ㅏㅈㅇ
+				// 자바, db, html의 점수 버무이는 1번 메뉴와 같다.
+				updateGrade(scanner, indexList, list);
+			} else if (menu == 5) {
+				
 			} else {
 				System.out.println("프로그램을 종료합니다.");
 				break;
 			}
 		}
+
+	}
+
+	private static void updateGrade(Scanner scanner, List<String> indexList, List<Map<String, Object>> list) {
+
+		// 학번 입력 받아서 해당 학번이 없으면 학번을 확인해주세요
+		// 메뉴로 이동
+		// 있는 학번이면 java, db, html 점수를 다시 입력받아서 해당 저무솔 저ㅏㅈㅇ
+		// 자바, db, html의 점수 버무이는 1번 메뉴와 같다.
+
+		System.out.print("학번 입력: ");
+		String studNo = scanner.next();
+		Map<String, Object> studentMap = findByStudentNo(list, studNo);
+
+		if (studentMap == null) {
+			System.out.println("학번을 확인해주세요.");
+			return;
+		}
+
+		System.out.println("점수를 수정합니다..");
+
+		int javaPoint = inputPoint(scanner, 0, 40, "JAVA 점수: ");
+		int dbPoint = inputPoint(scanner, 0, 35, "DB 점수: ");
+		int htmlPoint = inputPoint(scanner, 0, 25, "HTML 점수: ");
+
+		studentMap.put("java", javaPoint);
+		studentMap.put("db", dbPoint);
+		studentMap.put("html", htmlPoint);
+		System.out.println("학번 [" + studNo + "]의수정을 완료하였습니다.");
 
 	}
 
