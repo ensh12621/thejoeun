@@ -1,39 +1,5 @@
 package day11;
 
-import java.util.HashMap;
-import java.util.Map;
-
-class Tuple {
-	private String key;
-	private Integer value;
-
-	public Tuple(String key, Integer value) {
-		this.key = key;
-		this.value = value;
-	}
-
-	public String getKey() {
-		return key;
-	}
-
-	public void setKey(String key) {
-		this.key = key;
-	}
-
-	public Integer getValue() {
-		return value;
-	}
-
-	public void setValue(Integer value) {
-		this.value = value;
-	}
-
-	@Override
-	public String toString() {
-		return "Tuple [key=" + key + ", value=" + value + "]";
-	}
-}
-
 public class Quiz3 {
 
 	public static void main(String[] args) {
@@ -45,13 +11,37 @@ public class Quiz3 {
 
 	private static String compressString2(String input) {
 
-		Map<Integer, Tuple> map = new HashMap<>();
-
-				// TODO :크아악 해결못했다
-				
+		StringBuffer buffer = new StringBuffer();
 		
+		buffer.append(input.charAt(0));
 		
-		return null;
+		char currentChar = input.charAt(0);
+		int nDuplicated = 1;
+		for(int i=0; i<input.length(); i++) {
+			
+			if(currentChar == input.charAt(i)) {
+				System.out.println(input.charAt(i) + ", if()");
+				nDuplicated++;
+				buffer.append(currentChar);
+			}else {
+				System.out.println(input.charAt(i) + ", else()");
+				// buffer.append(currentChar);
+				if(nDuplicated > 1) {
+					buffer.append(String.valueOf(nDuplicated));
+				}
+				currentChar = input.charAt(i);
+				nDuplicated = 1;
+			}
+		}
+		buffer.append(currentChar);
+		
+		if(nDuplicated > 1) {
+			buffer.append(nDuplicated);
+		}
+		
+		// 오답임.. 모르겠다 하..
+		
+		return buffer.toString();
 	}
 
 	private static String compressString(String input) {

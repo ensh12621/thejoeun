@@ -16,8 +16,17 @@ public class MyFunction {
 
 			System.out.println("0보다 더 큰 숫자를 입력해주세요.");
 		}
-
 	}
-	
-	
+
+	public static int checkNumber(String msg, int min, int max) {
+		while (true) {
+			System.out.print(msg);
+			int input = scanner.nextInt();
+			if (input >= min && input <= max) {
+				return input;
+			}
+			System.out.println("구매 가능 개수는 " + min + " ~ " + max + "개 입니다.");
+		}
+	}
+
 }

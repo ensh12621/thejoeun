@@ -13,9 +13,10 @@ public class _4_과일가게_DB연결 {
 	public static void addFruit() {
 		System.out.println("=== 과일 추가 ===");
 
-		String fruitName = receiveFruitName();
+		System.out.print("과일 이름: ");
+		String fruitName = scanner.next();
 
-		if (fruitName != null && fruitName.equals("exists")) {
+		if(existsFruitName(fruitName)) {
 			System.out.println("이미 존재하는 과일입니다.");
 			return;
 		}
@@ -50,25 +51,6 @@ public class _4_과일가게_DB연결 {
 		return val;
 	}
 
-	private static String receiveFruitName() {
-		System.out.print("과일 이름: ");
-		String fruitName = scanner.next();
-
-		String sql = "select fruit_name from fruit where fruit_name = '" + fruitName + "'";
-
-		try {
-			ResultSet rs = stmt.executeQuery(sql);
-			if (rs.next()) {
-				return "exists";
-			} else {
-				return fruitName; // 신규 과일명 입력을 위해.
-			}
-		} catch (Exception e) {
-			System.err.println(e.getMessage());
-		}
-
-		return null;
-	}
 
 	public static void deleteFruit() {
 		// 정말 삭제하시겠습니까? y/Y
@@ -79,9 +61,15 @@ public class _4_과일가게_DB연결 {
 		System.out.print("삭제할 과일 이름 입력: ");
 		String fruit = scanner.next();
 
+		if(!existsFruitName(fruit)) {
+			System.out.println("과일 이름을 확인해주세요.");
+			return;
+		}
+		
 		System.out.print("정말 삭제하시겠습니까?(y)");
 		String keepGoing = scanner.next().toLowerCase();
 		if (!keepGoing.equals("y")) {
+			System.out.println("삭제하지 않았습니다.");
 			return;
 		}
 
@@ -89,10 +77,8 @@ public class _4_과일가게_DB연결 {
 
 		try {
 			int nUpdated = stmt.executeUpdate(sql);
-			if(nUpdated > 0) {
-				System.out.println("과일 "+fruit+"을(를) 성공적으로 삭제하였습니다.");
-			}else {
-				System.out.println("과일 이름을 확인해주세요.");
+			if (nUpdated > 0) {
+				System.out.println("과일 " + fruit + "을(를) 성공적으로 삭제하였습니다.");
 			}
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
@@ -108,6 +94,10 @@ public class _4_과일가게_DB연결 {
 
 		System.out.print("과일 이름: ");
 		String fruitName = scanner.next();
+		
+		if(!existsFruitName(fruitName)) {
+			System.out.println("해당 과일은 존재하지 않습니다");
+		}
 
 		String sql = "select fruit_name from fruit where fruit_name = '" + fruitName + "'";
 		try {
@@ -123,9 +113,7 @@ public class _4_과일가게_DB연결 {
 				} else {
 					System.out.println("알 수 없는 이유로 가격 수정에 실패하였습니다.");
 				}
-			} else {
-				System.out.println("해당 과일은 없습니다.");
-			}
+			} 
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
 		}
@@ -133,7 +121,70 @@ public class _4_과일가게_DB연결 {
 
 	public static void sellFruit() {
 		System.out.println("=== 과일 판매 ===");
+		// 판매할 과일 이름 입력 받기
+		// 해당 과일 db에 없으면 없다는 문구 출력 후 메뉴로 이동
+		// 2. 과일이 있을 경우 현재 개수 알려주고 구매할 개수 입력받기
+		// 3. 구매개수는 1이상, 현재개수보다 적은 숫자 입력
+		// 4. 정상 범위내에 입력했으면 기존 개수에서 차감후 메뉴로 이동
 
+		System.out.print("판매할 과일 이름 입력: ");
+		String fruitName = scanner.next();
+
+		if (!existsFruitName(fruitName)) {
+			System.out.println("해당 과일은 존재하지 않습니다.");
+		} else {
+			int stockCount = getFruitCount(fruitName);
+
+			int requiredStockCnt = MyFunction.checkNumber("판매할 과일 개수 입력: ", 1, stockCount);
+			if (requiredStockCnt < 0) {
+				System.out.println("올바른 개수 값을 입력해주세요.");
+			} else if (stockCount < requiredStockCnt) {
+				System.out.println("요구하는 과일 개수가 존재하는 과일 개수보다 초과하였습니다.");
+			} else {
+				setFruitStockCount(fruitName, stockCount - requiredStockCnt);
+				System.out.println(fruitName + "과일을 판매하였습니다. 남은 재고 (" + (stockCount - requiredStockCnt) + ")");
+			}
+		}
+
+	}
+
+	private static boolean setFruitStockCount(String fruitName, int cnt) {
+		String sql = "update fruit set cnt = " + cnt + " where fruit_name = '" + fruitName + "'";
+		int nUpdated;
+		try {
+			nUpdated = stmt.executeUpdate(sql);
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+			return false;
+		}
+
+		return nUpdated == 1 ? true : false;
+	}
+
+	private static int getFruitCount(String fruitName) {
+		String sql = "select cnt from fruit where fruit_name = '" + fruitName + "'";
+		try {
+			ResultSet rs = stmt.executeQuery(sql);
+			if (rs.next()) {
+				return rs.getInt("cnt");
+			} else {
+				return -1;
+			}
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+		}
+
+		return 0;
+	}
+
+	private static boolean existsFruitName(String fruitName) {
+		String sql = "select 1 from fruit where fruit_name = '" + fruitName + "'";
+		try {
+			return stmt.executeQuery(sql).next();
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+			return false;
+		}
 	}
 
 	public static void checkFruit() {
